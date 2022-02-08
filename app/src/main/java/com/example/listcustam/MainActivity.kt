@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ListView
 import android.widget.SimpleAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,8 +19,14 @@ class MainActivity : AppCompatActivity() {
            ListItem(4,"夜の女王のアリア","声楽","モーツアルト作曲"),
         )
 
-        val list = findViewById<ListView>(R.id.list)
-        //Map配列とレイアウトと関連付け
-        list.adapter = MyListAdapter(this,data,R.layout.list_item)
+        val rv = findViewById<RecyclerView>(R.id.rv)
+        //固定サイズの場合にパフォーマンスを向上
+        rv.setHasFixedSize(true)
+        //レイアウトマネージャーの準備&設定
+        rv.layoutManager = LinearLayoutManager(this).apply {
+            orientation = LinearLayoutManager.VERTICAL
+        }
+        rv.adapter = MyListAdapter(data)
+
     }
 }
